@@ -21,7 +21,15 @@ namespace eticaretWebsite.Controllers
         public IActionResult Index()
         {
             List<Product> products = _productService.GetProductFeatures();
+            
             return View(products);
+        }
+        public IActionResult ProductDetails(int id)
+        {
+            if (id == null) { return NotFound(); }
+            Product product= _productService.GetByID(id);
+            
+            return View(product);
         }
         public IActionResult MarkalarGetir()
         {

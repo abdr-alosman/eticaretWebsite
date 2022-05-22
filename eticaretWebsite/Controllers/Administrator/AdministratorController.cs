@@ -82,9 +82,30 @@ namespace eticaretWebsite.Controllers.Administrator
 
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult FeatureList()
+        {
+            List<Feature> features = _featureService.GetListAll().Where(x => x.BrandId == user().BrandId).ToList();
+            return View(features);
+        }
+        public IActionResult ApplyDiscount(int id, int discount, string isDiscount)
+        {
+            Feature ff = _featureService.GetByID(id);
+            if (isDiscount=="on")
+            {
+                ff.IsDiscounted = true;
+                ff.DicountRate = discount;
+            }
+            if (isDiscount == null)
+            {
+                ff.IsDiscounted = false;
+                ff.DicountRate = null;
+            }
+            _featureService.Update(ff);
+            return RedirectToAction(nameof(FeatureList));
+        }
+
         public IActionResult CreateFeature()
         {
-            
             ViewBag.BrandId = user().BrandId;
             return View(new Feature());
         }

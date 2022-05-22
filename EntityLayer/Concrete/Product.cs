@@ -15,7 +15,7 @@ namespace EntityLayer.Concrete
         public string ImageUrl { get; set; }
         public bool Status { get; set; }
         public string? ProductDescription { get; set; }
-        public int? BrandId { get; set; }
+        public int BrandId { get; set; }
         public List<Comment>? CommentList { get; set; }
         public List<ProductFeature>? ProductFeatureList { get; set; }
         public List<ProductCategory>? ProductCategorList { get; set; }

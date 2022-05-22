@@ -25,20 +25,35 @@
                     <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                            <h5 class="fw-bolder">@item.Name</h5>
-                                <!-- Product price-->
+                            <a href="/Home/ProductDetails/@item.Id">
+                                    <h5 class="fw-bolder">@item.Name</h5>
+                                </a>
+                                @{
+                                    bool isDiscounted=false;
+                                    int? oran=0 ;
+                                }
                                 @foreach (var item2 in item.ProductFeatureList.Where(x=>x.ProductId==item.Id))
                                 {
-                                    if (item2.Feature.IsDiscounted==false)
+                                    if (item2.Feature.IsDiscounted == true)
                                     {
-                                        @item.Price
-                                    }
-                                    else
-                                    {
-                                        @(item.Price-(item.Price*@item2.Feature.DicountRate))
+                                        isDiscounted = true;
+                                        oran = item2.Feature.DicountRate;
+                                        break;
 
                                     }
                                 }
+                                @if (isDiscounted==true)
+                                {
+                                    var disc = (item.Price * oran) / 100;
+                                    <p class="text-decoration-line-through text-danger">@item.Price TL</p>
+                                    <p class="text-success">@(@item.Price-disc) TL </p>
+                                }
+                                else
+                                {
+                                   @(item.Price)
+
+                                }
+                                <!-- Product price-->
                             
                             </div>
                         </div>
